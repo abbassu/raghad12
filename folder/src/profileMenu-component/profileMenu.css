@@ -9,13 +9,17 @@
 
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-top: 50px;
   /* margin-bottom: 2000px; */
   /* margin-right: 800px; */
   position: relative;
+}
+
+.container-sec {
+  flex-direction: column;
 }
 .container:checked {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);

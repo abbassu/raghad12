@@ -4,7 +4,7 @@
 }
 .scroll {
   width: 920px;
-  height: 270px;
+  height: 370px;
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;

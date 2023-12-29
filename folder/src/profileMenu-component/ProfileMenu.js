@@ -45,7 +45,7 @@ const ProfileMenu = () => {
 
   return (
     <div className="all-component-profile">
-      <div className="container">
+      <div className="container container-sec">
         <div class="row g-4">
           <div class="col-lg-3">
             <div className="profile-menu">

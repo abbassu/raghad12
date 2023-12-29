@@ -1,20 +1,65 @@
-import React from "react";
-const news = () => {
-return (
-<div className ="news_conteiner">
-    <div className ="news_header">
-        <h4>Today's news</h4>
+import React, { useState, useEffect } from "react";
+import { getnews } from "../firebase/firebase";
+import "./New.css";
+const News = () => {
+  const [view, setview] = useState(2);
+
+  const [allNew, setallNew] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch cities data asynchronously
+    const fetchCitiesData = async () => {
+      console.log("eeeeeeeeee");
+      try {
+        console.log("ttttt");
+
+        // Call the getCities function passing your database instance
+        // 'db' is assumed to be your Firebase Firestore instance
+        const newslist = await getnews();
+
+        setallNew(newslist);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+
+    fetchCitiesData(); // Call the function when the component mounts
+  }, []); // Include 'db' in the dependency array if it's a variable coming from props or context
+
+  return (
+    <div className="news_conteiner">
+      <div className="App22">
+        <div className="target">Today’s news </div>
+        <div className="itemss">
+          {allNew.map((item, index) => {
+            if (index <= view) {
+              return (
+                <div className="">
+                  <a className="opo" href={item.tit}>
+                    {item.namees}
+                  </a>
+                  <div className="iiii">{item.howeee}</div>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
+        {view === 4 ? (
+          <> </>
+        ) : (
+          <div
+            className="lla"
+            onClick={() => {
+              setview(4);
+            }}
+          >
+            {" "}
+            ... view all lastes news{" "}
+          </div>
+        )}
+      </div>
     </div>
-    <div className="news_Body">
-        <p>Ten questions you should<br>answer trithfully</br>2hr</p>
-        <p>Five unbelievable facts about<br>money</br>2hr</p>
-        <p>Best pinterest Boards for<br>learning about business</br>2hr</p>
-        <p>Skills that you can learn from<br>business</br>2hr</p>
-    </div>
-    <div className="news_down">
-        <button className="news_button">view all latest news</button>
-    </div>
-</div>
-);
-}
-export default news;
+  );
+};
+export default News;

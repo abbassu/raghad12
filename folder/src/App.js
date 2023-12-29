@@ -8,10 +8,36 @@ import ProfileMenu from "./profileMenu-component/ProfileMenu";
 import FollowCard from "./followCard_compontent/FollowCard";
 import Createpost from "./createPost_component/CreatePost";
 import Post from "./post_component/Post";
+import { getstory } from "./firebase/firebase";
+import { useState, useEffect } from "react";
+import News from "./news_component/New";
 // import news from './news_component/New';
 // import news from './news_component/New';
 import "./App.css";
 function App() {
+  const [allStory, setAllStory] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch cities data asynchronously
+    const fetchCitiesData = async () => {
+      console.log("eeeeeeeeee");
+      try {
+        console.log("ttttt");
+
+        // Call the getCities function passing your database instance
+        // 'db' is assumed to be your Firebase Firestore instance
+        const storylist = await getstory();
+
+        setAllStory(storylist);
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", storylist);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+
+    fetchCitiesData(); // Call the function when the component mounts
+  }, []); // Include 'db' in the dependency array if it's a variable coming from props or context
+
   return (
     <div>
       <header className="Navbar">
@@ -27,11 +53,13 @@ function App() {
               <div className="body">
                 <div className="story-gallary">
                   <StoryAdd />
-                  <StoryPeople
-                    title="raghadz"
-                    photo="https://i.pinimg.com/736x/b2/81/28/b28128a0546d0570f2581c452b8cdaf7.jpg"
-                  />
-                  <StoryPeople
+                  {allStory.map((item) => {
+                    return (
+                      <StoryPeople title={item.forname} photo={item.imgg} />
+                    );
+                  })}
+
+                  {/* <StoryPeople
                     title="haneen"
                     photo="https://th.bing.com/th/id/OIP.jpP1tJ3ckoe-qSsORHmSMQHaJl?rs=1&pid=ImgDetMain"
                   />
@@ -46,7 +74,7 @@ function App() {
                   <StoryPeople
                     title="raghads"
                     photo="https://i.pinimg.com/736x/6c/fe/9b/6cfe9b4819cdbd78887be8e601a11954.jpg"
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -63,6 +91,7 @@ function App() {
 
         <div>
           <FollowCard />
+          <News />
         </div>
       </div>
     </div>
